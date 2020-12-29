@@ -4,3 +4,5 @@ coverage/
 yarn-error.log
 src/shared/errors/logs/*.txt
 dist/
+.env
+ormconfig.json
