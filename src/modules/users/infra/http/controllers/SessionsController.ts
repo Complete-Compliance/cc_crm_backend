@@ -5,7 +5,6 @@ import AuthenticateUserService from '@modules/users/services/AuthenticateUserSer
 
 export default class SessionsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    console.log(`PAYLOAD: ${request.body}`);
     const { login, password } = request.body;
 
     const authenticateUser = container.resolve(AuthenticateUserService);

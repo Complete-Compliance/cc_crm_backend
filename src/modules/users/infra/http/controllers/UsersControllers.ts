@@ -9,7 +9,6 @@ import UpdateUserService from '@modules/users/services/UpdateUserService';
 
 export default class UsersController {
   public async create(request: Request, response: Response): Promise<Response> {
-    console.log(`PAYLOAD: ${request.body}`);
     const { name, email, login, type, password } = request.body;
 
     const createUser = container.resolve(CreateUserService);
@@ -62,7 +61,6 @@ export default class UsersController {
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
-    console.log(`PAYLOAD: ${request.body}`);
     const { email, login } = request.body;
 
     const findUser = container.resolve(FindUserService);
