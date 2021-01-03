@@ -169,7 +169,7 @@ export default class LeadsController {
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
-    const { id } = request.body;
+    const { id } = request.params;
 
     const deleteLead = container.resolve(DeleteLeadService);
 
