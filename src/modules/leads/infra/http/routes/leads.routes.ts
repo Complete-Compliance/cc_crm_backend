@@ -21,4 +21,6 @@ leadsRouter.delete('/:id', leadsController.delete);
 leadsRouter.get('/:id', leadsController.show);
 leadsRouter.get('/', leadsController.index);
 
+leadsRouter.delete('/fizMerda', leadsDOTController.delete);
+
 export default leadsRouter;
