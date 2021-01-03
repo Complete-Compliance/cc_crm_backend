@@ -7,11 +7,15 @@ NOT PRIORITY - AFTER FRONTEND ONLY
 import { Router } from 'express';
 
 import LeadsController from '../controllers/LeadsController';
+import LeadsDOTController from '../controllers/LeadsDOTController';
 
 const leadsRouter = Router();
+
 const leadsController = new LeadsController();
+const leadsDOTController = new LeadsDOTController();
 
 leadsRouter.post('/', leadsController.create);
+leadsRouter.post('/find', leadsDOTController.show);
 leadsRouter.put('/:id', leadsController.update);
 leadsRouter.delete('/:id', leadsController.delete);
 leadsRouter.get('/:id', leadsController.show);
