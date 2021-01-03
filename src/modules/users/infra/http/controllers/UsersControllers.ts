@@ -26,7 +26,6 @@ export default class UsersController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const {
-      id,
       name,
       email,
       login,
@@ -34,6 +33,13 @@ export default class UsersController {
       oldPassword,
       passwordConfirmation,
     } = request.body;
+
+    // Below is because sometimes the update will come from the user
+    // but in this same route admin will update other users from body
+    let { id } = request.body;
+    if (!id) {
+      id = request.user.id;
+    }
 
     const updateUser = container.resolve(UpdateUserService);
 
