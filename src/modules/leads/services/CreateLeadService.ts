@@ -12,6 +12,7 @@ interface IRequest {
   operatingStatus?: string;
   companyName?: string;
   fullName?: string;
+  dbaName?: string;
   primaryAddress?: string;
   state?: string;
   zipCode?: string;
@@ -51,6 +52,7 @@ export default class CreateLeadService {
     operatingStatus,
     companyName,
     fullName,
+    dbaName,
     primaryAddress,
     state,
     zipCode,
@@ -92,6 +94,7 @@ export default class CreateLeadService {
       operatingStatus,
       companyName,
       fullName,
+      dbaName,
       primaryAddress,
       state,
       zipCode,

@@ -13,6 +13,7 @@ interface IRequest {
   operatingStatus?: string;
   companyName?: string;
   fullName?: string;
+  dbaName?: string;
   primaryAddress?: string;
   state?: string;
   zipCode?: string;
@@ -53,6 +54,7 @@ export default class UpdateLeadService {
     operatingStatus,
     companyName,
     fullName,
+    dbaName,
     primaryAddress,
     state,
     zipCode,
@@ -97,6 +99,7 @@ export default class UpdateLeadService {
     lead.operatingStatus = operatingStatus || lead.operatingStatus;
     lead.companyName = companyName || lead.companyName;
     lead.fullName = fullName || lead.fullName;
+    lead.dbaName = dbaName || lead.dbaName;
     lead.primaryAddress = primaryAddress || lead.primaryAddress;
     lead.state = state || lead.state;
     lead.zipCode = zipCode || lead.zipCode;

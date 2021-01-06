@@ -27,6 +27,9 @@ export default class Lead {
   fullName: string;
 
   @Column()
+  dbaName: string;
+
+  @Column()
   primaryAddress: string;
 
   @Column()

@@ -4,6 +4,7 @@ export default interface ICreateLeadDTO {
   operatingStatus?: string;
   companyName?: string;
   fullName?: string;
+  dbaName?: string;
   primaryAddress?: string;
   state?: string;
   zipCode?: string;
