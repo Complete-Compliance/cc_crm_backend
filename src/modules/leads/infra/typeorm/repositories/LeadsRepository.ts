@@ -41,7 +41,7 @@ export default class LeadsRepository implements ILeadsRepository {
   }
 
   public async findAll(): Promise<Lead[]> {
-    const leads = await this.ormRepository.find();
+    const leads = await this.ormRepository.find({ order: { usdot: 'DESC' } });
 
     return leads;
   }
