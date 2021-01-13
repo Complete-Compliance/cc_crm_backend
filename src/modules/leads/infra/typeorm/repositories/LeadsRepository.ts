@@ -24,6 +24,14 @@ export default class LeadsRepository implements ILeadsRepository {
     return lead;
   }
 
+  public async findHighestDOT(): Promise<number | undefined> {
+    const highestDOT = await this.ormRepository.query(
+      'SELECT MAX(CAST(usdot AS INT)) FROM leads',
+    );
+
+    return highestDOT;
+  }
+
   public async create(leadData: ICreateLeadDTO): Promise<Lead> {
     const lead = this.ormRepository.create(leadData);
 

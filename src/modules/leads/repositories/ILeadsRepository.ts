@@ -7,5 +7,6 @@ export default interface ILeadsRepository {
   delete(lead: Lead): Promise<void>;
   findById(id: string): Promise<Lead | undefined>;
   findByDOT(dot: string): Promise<Lead | undefined>;
+  findHighestDOT(): Promise<number | undefined>;
   findAll(): Promise<Lead[]>;
 }
