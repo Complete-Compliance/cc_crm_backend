@@ -51,4 +51,15 @@ export default class FakeLeadsRepository implements ILeadsRepository {
 
     this.leads.splice(findIndex, 1);
   }
+
+  public async findHighestDOT(): Promise<number | undefined> {
+    const highestDOT = this.leads.reduce((highest, currentLead) => {
+      if (Number(highest.usdot) < Number(currentLead.usdot)) {
+        return currentLead;
+      }
+      return highest;
+    }, this.leads[0]);
+
+    return Number(highestDOT.usdot);
+  }
 }
