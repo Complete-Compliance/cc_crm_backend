@@ -1,10 +1,24 @@
+# FOLDERS
 node_modules/
-.DS_Store
 coverage/
-yarn-error.log
-src/shared/errors/logs/*.txt
 dist/
+
+# HIDDEN FILES
+.DS_Store
 .env
-ormconfig.json
 .vscode/
 
+# DATABASE
+ormconfig.json
+
+# YARN
+yarn-error.log
+
+# ERROR LOGS
+src/shared/errors/logs/*.txt
+
+# PYTHON IGNORES
+src/shared/utils/scraper/__pycache__
+src/shared/utils/scraper/logs
+src/shared/utils/scraper/.env
+src/shared/utils/scraper/test.py
