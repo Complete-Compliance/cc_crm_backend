@@ -6,3 +6,5 @@ src/shared/errors/logs/*.txt
 dist/
 .env
 ormconfig.json
+.vscode/
+
