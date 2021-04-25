@@ -20,7 +20,7 @@ export default class FakeLeadsRepository implements ILeadsRepository {
     return foundLead;
   }
 
-  public async findAll(): Promise<Lead[]> {
+  public async findAll(skip: number): Promise<Lead[]> {
     return this.leads;
   }
 

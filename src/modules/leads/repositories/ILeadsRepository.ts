@@ -8,5 +8,5 @@ export default interface ILeadsRepository {
   findById(id: string): Promise<Lead | undefined>;
   findByDOT(dot: string): Promise<Lead | undefined>;
   findHighestDOT(): Promise<number | undefined>;
-  findAll(): Promise<Lead[]>;
+  findAll(skip: number): Promise<Lead[]>;
 }

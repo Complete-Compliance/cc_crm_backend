@@ -84,15 +84,17 @@ export default class LeadsController {
 
     const listLead = container.resolve(ListLeadsService);
 
-    const lead = await listLead.execute(id);
+    const lead = await listLead.execute({ id });
 
     return response.json(lead);
   }
 
-  public async index(_request: Request, response: Response): Promise<Response> {
+  public async index(request: Request, response: Response): Promise<Response> {
+    const { page } = request.query;
+
     const listLeads = container.resolve(ListLeadsService);
 
-    const leads = await listLeads.execute();
+    const leads = await listLeads.execute({ page: page as string });
 
     return response.json(leads);
   }
