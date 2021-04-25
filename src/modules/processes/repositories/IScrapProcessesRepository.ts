@@ -6,4 +6,5 @@ export default interface IScrapProcessesRepository {
   update(scrapProcess: ScrapProcess): Promise<ScrapProcess>;
   findByStatus(status: string): Promise<ScrapProcess | undefined>;
   findById(id: string): Promise<ScrapProcess | undefined>;
+  findAll(): Promise<ScrapProcess[]>;
 }

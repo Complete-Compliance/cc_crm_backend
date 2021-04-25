@@ -36,4 +36,10 @@ export default class ScrapProcessesRepository
 
     return process;
   }
+
+  public async findAll(): Promise<ScrapProcess[]> {
+    const processes = await this.ormRepository.find();
+
+    return processes;
+  }
 }

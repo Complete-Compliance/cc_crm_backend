@@ -12,6 +12,10 @@ export default class FindLeadByDotService {
   public async execute(dot: string): Promise<Lead | undefined> {
     const lead = await this.leadsRepository.findByDOT(dot);
 
+    if (!lead) {
+      return undefined;
+    }
+
     return lead;
   }
 }

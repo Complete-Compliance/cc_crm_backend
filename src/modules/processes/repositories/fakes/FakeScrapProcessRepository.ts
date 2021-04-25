@@ -46,4 +46,8 @@ export default class FakeScrapProcessRepository
 
     return process;
   }
+
+  public async findAll(): Promise<ScrapProcess[]> {
+    return this.processes;
+  }
 }

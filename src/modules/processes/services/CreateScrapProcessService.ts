@@ -16,8 +16,8 @@ export default class CreateScrapProcessService {
   ) {}
 
   public async execute({ startDot, endDot }: IRequest): Promise<ScrapProcess> {
-    if (Number(startDot) < Number(endDot)) {
-      throw new AppError('Start search should be higher than End search');
+    if (Number(startDot) > Number(endDot)) {
+      throw new AppError('StartDot should be lower than EndDot');
     }
 
     const process = await this.scrapProcessesRepository.create({

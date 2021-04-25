@@ -24,7 +24,7 @@ describe('CreateScrapProcess', () => {
     expect(process.status).toBe('Created');
   });
 
-  it('should not be able to create a scrap process when the startDot is lower than the endDot', async () => {
+  it('should not be able to create a scrap process when the startDot is higher than the endDot', async () => {
     await expect(
       createScrapProcess.execute({
         startDot: '400',

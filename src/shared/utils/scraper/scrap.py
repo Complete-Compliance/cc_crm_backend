@@ -9,8 +9,8 @@ from request_utils import *
 class Scraper():
 	def __init__(self, startDot, endDot):
 		self.crm = CRM_Manager()
-    self.startDot = int(startDot)
-    self.endDot = int(endDot)
+		self.startDot = int(startDot)
+		self.endDot = int(endDot)
 
 	def start_requests(self):
 		for currentDot in range(self.startDot, self.endDot + 1):
@@ -23,15 +23,17 @@ class Scraper():
 					leadExists = self.crm.findLead(lead['usdot'])
 					if not leadExists:
 						self.crm.createLead(lead)
-          else:
-            self.crm.updateLead(lead, leadExists['id'])
+					else:
+						self.crm.updateLead(lead, leadExists['id'])
 
 				except Exception as Error:
-          continue
+					continue
 			else:
-        continue
+				continue
 
 			time.sleep(5)
+
+		self.crm.updateProcessStatus()
 
 if __name__ == '__main__':
 	app = Scraper(argv[1], argv[2])
