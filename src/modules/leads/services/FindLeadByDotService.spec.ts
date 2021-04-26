@@ -20,10 +20,14 @@ describe('FindLeadByDot', () => {
       fullName: 'John Doe',
     });
 
-    await expect(findLead.execute('1234567')).toEqual(lead);
+    const foundLead = await findLead.execute('1234567');
+
+    expect(foundLead?.id).toEqual(lead.id);
   });
 
   it('should be able to return undefined when a lead is not found', async () => {
-    await expect(findLead.execute('1234515')).toEqual(undefined);
+    const foundLead = await findLead.execute('1234567');
+
+    expect(foundLead).toBe(undefined);
   });
 });

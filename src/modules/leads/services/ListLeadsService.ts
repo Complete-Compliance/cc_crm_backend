@@ -3,6 +3,11 @@ import { inject, injectable } from 'tsyringe';
 import Lead from '../infra/typeorm/entities/Lead';
 import ILeadsRepository from '../repositories/ILeadsRepository';
 
+interface IRequest {
+  id?: string;
+  page?: string;
+}
+
 @injectable()
 export default class ListLeadsService {
   constructor(
@@ -10,7 +15,7 @@ export default class ListLeadsService {
     private leadsRepository: ILeadsRepository,
   ) {}
 
-  public async execute(id?: string): Promise<Lead | Lead[]> {
+  public async execute({ id, page }: IRequest): Promise<Lead | Lead[]> {
     if (id) {
       const lead = await this.leadsRepository.findById(id);
 
@@ -21,7 +26,13 @@ export default class ListLeadsService {
       return lead;
     }
 
-    const leads = await this.leadsRepository.findAll();
+    if (!id && !page) {
+      throw new AppError('Page must be present when ID is not');
+    }
+
+    const skip = (Number(page) - 1) * 50;
+
+    const leads = await this.leadsRepository.findAll(skip);
 
     if (!leads.length) {
       throw new AppError('No leads found', 404);

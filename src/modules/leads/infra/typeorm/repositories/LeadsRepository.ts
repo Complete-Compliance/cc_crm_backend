@@ -48,9 +48,19 @@ export default class LeadsRepository implements ILeadsRepository {
     await this.ormRepository.remove(lead);
   }
 
-  public async findAll(): Promise<Lead[]> {
-    const leads = await this.ormRepository.find({ order: { usdot: 'DESC' } });
+  public async findAll(skip: number): Promise<Lead[]> {
+    const leads = await this.ormRepository.find({
+      order: { usdot: 'DESC' },
+      skip,
+      take: 50,
+    });
 
     return leads;
+  }
+
+  public async countLeads(): Promise<number> {
+    const leadQuantity = await this.ormRepository.count();
+
+    return leadQuantity;
   }
 }

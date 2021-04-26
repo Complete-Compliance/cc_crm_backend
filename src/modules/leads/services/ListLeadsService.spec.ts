@@ -22,7 +22,7 @@ describe('ListLeads', () => {
       fullName: 'John Doe',
     });
 
-    const foundLead = await listLeads.execute(lead.id);
+    const foundLead = await listLeads.execute({ id: lead.id });
 
     expect(foundLead).toEqual(lead);
   });
@@ -38,18 +38,20 @@ describe('ListLeads', () => {
       fullName: 'John Doe 2',
     });
 
-    const leads = await listLeads.execute();
+    const leads = await listLeads.execute({ page: '0' });
 
     expect(leads).toEqual(expect.arrayContaining([lead1, lead2]));
   });
 
   it('should not be able to list a unexisting lead when wrong id is given', async () => {
-    await expect(listLeads.execute('non-existing-id')).rejects.toBeInstanceOf(
-      AppError,
-    );
+    await expect(
+      listLeads.execute({ id: 'non-existing-id' }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 
   it('should not be able to list all leads when none exists', async () => {
-    await expect(listLeads.execute()).rejects.toBeInstanceOf(AppError);
+    await expect(listLeads.execute({ page: '0' })).rejects.toBeInstanceOf(
+      AppError,
+    );
   });
 });

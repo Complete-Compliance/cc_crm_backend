@@ -5,6 +5,7 @@ import CreateLeadService from '@modules/leads/services/CreateLeadService';
 import ListLeadsService from '@modules/leads/services/ListLeadsService';
 import UpdateLeadService from '@modules/leads/services/UpdateLeadService';
 import DeleteLeadService from '@modules/leads/services/DeleteLeadService';
+import CountLeadsService from '@modules/leads/services/CountLeadsService';
 
 export default class LeadsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -84,17 +85,27 @@ export default class LeadsController {
 
     const listLead = container.resolve(ListLeadsService);
 
-    const lead = await listLead.execute(id);
+    const lead = await listLead.execute({ id });
 
     return response.json(lead);
   }
 
-  public async index(_request: Request, response: Response): Promise<Response> {
+  public async index(request: Request, response: Response): Promise<Response> {
+    const { page } = request.query;
+
     const listLeads = container.resolve(ListLeadsService);
 
-    const leads = await listLeads.execute();
+    const leads = await listLeads.execute({ page: page as string });
 
     return response.json(leads);
+  }
+
+  public async count(request: Request, response: Response): Promise<Response> {
+    const countLeads = container.resolve(CountLeadsService);
+
+    const leadsQtd = await countLeads.execute();
+
+    return response.json(leadsQtd);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
