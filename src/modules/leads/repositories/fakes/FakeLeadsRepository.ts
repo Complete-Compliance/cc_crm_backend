@@ -20,6 +20,16 @@ export default class FakeLeadsRepository implements ILeadsRepository {
     return foundLead;
   }
 
+  public async findByContainingStringDOT(
+    searchString: string,
+  ): Promise<Lead[]> {
+    const foundLeads = this.leads.filter(
+      lead => lead.usdot.indexOf(searchString) >= 0,
+    );
+
+    return foundLeads;
+  }
+
   public async findAll(skip: number): Promise<Lead[]> {
     return this.leads;
   }
