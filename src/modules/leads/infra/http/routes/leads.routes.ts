@@ -22,6 +22,7 @@ leadsRouter.put('/:id', leadsController.update);
 leadsRouter.delete('/:id', leadsController.delete);
 leadsRouter.get('/:id', leadsController.show);
 leadsRouter.get('/', leadsController.index);
+leadsRouter.get('/count/all', leadsController.count);
 leadsRouter.get('/find/highestDOT', dotController.show);
 
 export default leadsRouter;

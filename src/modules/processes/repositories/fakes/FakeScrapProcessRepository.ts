@@ -31,6 +31,14 @@ export default class FakeScrapProcessRepository
     return scrapProcess;
   }
 
+  public async delete(scrapProcess: ScrapProcess): Promise<void> {
+    const processIndex = this.processes.findIndex(
+      processToFind => processToFind.id === scrapProcess.id,
+    );
+
+    this.processes.splice(processIndex, 1);
+  }
+
   public async findByStatus(status: string): Promise<ScrapProcess | undefined> {
     const process = this.processes.find(
       processToFind => processToFind.status === status,

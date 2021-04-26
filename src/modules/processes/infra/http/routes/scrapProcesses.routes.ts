@@ -14,5 +14,6 @@ scrapProcessesRouter.post('/scrap/:id', scrapByRangeController.handle);
 scrapProcessesRouter.put('/', scrapProcessesController.update);
 scrapProcessesRouter.put('/running', updateRunningProcessController.handle);
 scrapProcessesRouter.get('/', scrapProcessesController.index);
+scrapProcessesRouter.delete('/:id', scrapProcessesController.delete);
 
 export default scrapProcessesRouter;

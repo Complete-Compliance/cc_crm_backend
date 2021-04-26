@@ -62,4 +62,8 @@ export default class FakeLeadsRepository implements ILeadsRepository {
 
     return Number(highestDOT.usdot);
   }
+
+  public async countLeads(): Promise<number> {
+    return this.leads.length;
+  }
 }

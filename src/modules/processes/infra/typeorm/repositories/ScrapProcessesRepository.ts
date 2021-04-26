@@ -25,6 +25,10 @@ export default class ScrapProcessesRepository
     return scrapProcess;
   }
 
+  public async delete(scrapProcess: ScrapProcess): Promise<void> {
+    await this.ormRepository.remove(scrapProcess);
+  }
+
   public async findByStatus(status: string): Promise<ScrapProcess | undefined> {
     const process = await this.ormRepository.findOne({ where: { status } });
 

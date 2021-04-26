@@ -30,7 +30,7 @@ export default class ListLeadsService {
       throw new AppError('Page must be present when ID is not');
     }
 
-    const skip = Number(page) * 50;
+    const skip = (Number(page) - 1) * 50;
 
     const leads = await this.leadsRepository.findAll(skip);
 

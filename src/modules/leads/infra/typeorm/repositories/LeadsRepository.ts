@@ -57,4 +57,10 @@ export default class LeadsRepository implements ILeadsRepository {
 
     return leads;
   }
+
+  public async countLeads(): Promise<number> {
+    const leadQuantity = await this.ormRepository.count();
+
+    return leadQuantity;
+  }
 }
