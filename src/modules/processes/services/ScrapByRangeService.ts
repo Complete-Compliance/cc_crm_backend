@@ -32,7 +32,7 @@ export default class ScrapByRangeService {
     }
 
     spawn(
-      `/usr/local/bin/python3 ${process.env.PYTHON_SCRIPT_PATH}/scrap.py $START $END`,
+      `${process.env.PYTHON_EXEC_PATH} ${process.env.PYTHON_SCRIPT_PATH}/scrap.py $START $END`,
       {
         shell: true,
         detached: true,
