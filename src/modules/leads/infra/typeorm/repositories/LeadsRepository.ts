@@ -79,4 +79,17 @@ export default class LeadsRepository implements ILeadsRepository {
 
     return leadsLike;
   }
+
+  public async countByContainingStringDOT(
+    searchString: string,
+  ): Promise<number> {
+    const leadsLikeCount = await this.ormRepository
+      .createQueryBuilder('lead')
+      .where('lead.usdot LIKE :searchString', {
+        searchString: `%${searchString}%`,
+      })
+      .getCount();
+
+    return leadsLikeCount;
+  }
 }

@@ -9,6 +9,11 @@ import Lead from '../infra/typeorm/entities/Lead';
 let fakeLeadsRepository: FakeLeadsRepository;
 let findLead: FindLeadByDotService;
 
+interface IResponse {
+  leads: Lead[];
+  leadsCount: number;
+}
+
 describe('FindLeadByDot', () => {
   beforeEach(() => {
     fakeLeadsRepository = new FakeLeadsRepository();
@@ -22,13 +27,13 @@ describe('FindLeadByDot', () => {
       fullName: 'John Doe',
     });
 
-    const foundLead = (await findLead.execute({
+    const response = (await findLead.execute({
       dot: '1234567',
       searchCriteria: 'exact',
       page: '1',
-    })) as Lead[];
+    })) as IResponse;
 
-    expect(foundLead[0].id).toEqual(lead.id);
+    expect(response.leads[0].id).toEqual(lead.id);
   });
 
   it('should be able to find all leads that match the "dot" pattern passed', async () => {
@@ -52,23 +57,25 @@ describe('FindLeadByDot', () => {
       fullName: 'John Doe',
     });
 
-    const foundLeads = (await findLead.execute({
+    const response = (await findLead.execute({
       dot: '123',
       searchCriteria: 'contains',
       page: '1',
-    })) as Lead[];
+    })) as IResponse;
 
-    expect(foundLeads).toEqual(expect.arrayContaining([lead1, lead2, lead3]));
+    expect(response.leads).toEqual(
+      expect.arrayContaining([lead1, lead2, lead3]),
+    );
   });
 
   it('should be able to return undefined when a lead is not found with an exact search', async () => {
-    const foundLead = await findLead.execute({
+    const response = (await findLead.execute({
       dot: '1234567',
       searchCriteria: 'exact',
       page: '1',
-    });
+    })) as IResponse;
 
-    expect(foundLead).toBe(undefined);
+    expect(response).toBe(undefined);
   });
 
   it('should not be able search with an unknown searchCriteria', async () => {

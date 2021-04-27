@@ -11,6 +11,7 @@ export default interface ILeadsRepository {
     searchString: string,
     skip: number,
   ): Promise<Lead[]>;
+  countByContainingStringDOT(searchString: string): Promise<number>;
   findHighestDOT(): Promise<number | undefined>;
   findAll(skip: number): Promise<Lead[]>;
   countLeads(): Promise<number>;

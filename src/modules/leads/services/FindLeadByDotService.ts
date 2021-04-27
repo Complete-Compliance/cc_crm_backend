@@ -9,6 +9,11 @@ interface IRequest {
   page: string;
 }
 
+interface IResponse {
+  leads: Lead[];
+  leadsCount: number;
+}
+
 @injectable()
 export default class FindLeadByDotService {
   constructor(
@@ -20,7 +25,7 @@ export default class FindLeadByDotService {
     dot,
     searchCriteria,
     page,
-  }: IRequest): Promise<Lead[] | undefined> {
+  }: IRequest): Promise<IResponse | undefined> {
     switch (searchCriteria) {
       case 'exact': {
         const lead = await this.leadsRepository.findByDOT(dot);
@@ -29,7 +34,9 @@ export default class FindLeadByDotService {
           return undefined;
         }
 
-        return [lead];
+        const response: IResponse = { leads: [lead], leadsCount: 1 };
+
+        return response;
       }
       case 'contains': {
         const skip = (Number(page) - 1) * 50;
@@ -38,7 +45,13 @@ export default class FindLeadByDotService {
           skip,
         );
 
-        return leads;
+        const leadsCount = await this.leadsRepository.countByContainingStringDOT(
+          dot,
+        );
+
+        const response = { leads, leadsCount };
+
+        return response;
       }
       default: {
         throw new AppError('Unknown search criteria');
