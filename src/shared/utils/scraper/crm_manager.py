@@ -8,12 +8,10 @@ class CRM_Manager(object):
     self.api = config('crmApiUrl')
 
   def findLead(self, dot):
-    data = {'dot': dot}
-
-    response = req.post(f'{self.api}/leads/find', json=data)
+    response = req.get(f'{self.api}/leads/find?searchCriteria=exact&dot={dot}&page=1')
 
     if response.content:
-      return json.loads(response.content)
+      return json.loads(response.content)['leads'][0]
     else:
       return None
 

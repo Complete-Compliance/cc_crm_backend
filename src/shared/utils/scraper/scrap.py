@@ -14,6 +14,7 @@ class Scraper():
 
 	def start_requests(self):
 		for currentDot in range(self.startDot, self.endDot + 1):
+			print(f'SEARCHING DOT# {currentDot}')
 			lead = get_details(USDOTNumber=currentDot)
 			if lead:
 				try:
@@ -22,11 +23,15 @@ class Scraper():
 			
 					leadExists = self.crm.findLead(lead['usdot'])
 					if not leadExists:
+						print('NEW LEAD')
 						self.crm.createLead(lead)
 					else:
+						print(f"UPDATING LEAD WITH ID {leadExists['id']}")
 						self.crm.updateLead(lead, leadExists['id'])
 
 				except Exception as Error:
+					print('EXCEPTION')
+					print(Error)
 					continue
 			else:
 				continue

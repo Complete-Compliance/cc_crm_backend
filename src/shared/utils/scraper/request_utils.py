@@ -112,8 +112,7 @@ def get_details(USDOTNumber):
     except:
         print('INFO NOT FOUND - BASIC')
     try:
-        OperatingStatus = tree.xpath('//a[text()="Operating Status:"]/../following-sibling::td[1]/text()')[
-            0].strip()
+        OperatingStatus =  tree.xpath('//a[text()="Operating Status:"]/../following-sibling::td[1]/font/b/text()')[0].strip()
         lead.update({"operatingStatus": OperatingStatus})
     except:
         print('INFO NOT FOUND - BASIC')
@@ -173,9 +172,7 @@ def get_details(USDOTNumber):
     except:
         print('INFO NOT FOUND - BASIC')
     try:
-        Drivers = "\n".join(
-            [elm.strip() for elm in tree.xpath('//a[text()="Drivers:"]/../following-sibling::td[1]/text()') if
-                elm.strip()])
+        Drivers = tree.xpath('//a[text()="Drivers:"]/../following-sibling::td[1]/font/b/text()')[0].strip()
         lead.update({"drivers": Drivers})
     except:
         print('INFO NOT FOUND - BASIC')
@@ -240,6 +237,7 @@ def get_details(USDOTNumber):
         no_record = tree.xpath('//*[contains(text(), "No record found, please try different search parameters")]')
 
         if no_record:
+            print('NO RECORD FOR THIS LEAD')
             return lead
 
         pv_apcant_id = \
