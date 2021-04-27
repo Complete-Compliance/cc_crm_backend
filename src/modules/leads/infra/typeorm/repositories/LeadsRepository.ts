@@ -66,12 +66,15 @@ export default class LeadsRepository implements ILeadsRepository {
 
   public async findByContainingStringDOT(
     searchString: string,
+    skip: number,
   ): Promise<Lead[]> {
     const leadsLike = await this.ormRepository
       .createQueryBuilder('lead')
       .where('lead.usdot LIKE :searchString', {
         searchString: `%${searchString}%`,
       })
+      .offset(skip)
+      .limit(50)
       .getMany();
 
     return leadsLike;

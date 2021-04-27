@@ -25,6 +25,7 @@ describe('FindLeadByDot', () => {
     const foundLead = (await findLead.execute({
       dot: '1234567',
       searchCriteria: 'exact',
+      page: '1',
     })) as Lead[];
 
     expect(foundLead[0].id).toEqual(lead.id);
@@ -54,6 +55,7 @@ describe('FindLeadByDot', () => {
     const foundLeads = (await findLead.execute({
       dot: '123',
       searchCriteria: 'contains',
+      page: '1',
     })) as Lead[];
 
     expect(foundLeads).toEqual(expect.arrayContaining([lead1, lead2, lead3]));
@@ -63,6 +65,7 @@ describe('FindLeadByDot', () => {
     const foundLead = await findLead.execute({
       dot: '1234567',
       searchCriteria: 'exact',
+      page: '1',
     });
 
     expect(foundLead).toBe(undefined);
@@ -73,6 +76,7 @@ describe('FindLeadByDot', () => {
       findLead.execute({
         dot: '1234567',
         searchCriteria: 'all',
+        page: '1',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

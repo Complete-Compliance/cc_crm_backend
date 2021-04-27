@@ -17,9 +17,9 @@ const leadsDOTController = new LeadsDOTController();
 const dotController = new DOTController();
 
 leadsRouter.post('/', leadsController.create);
-leadsRouter.post('/find', leadsDOTController.show);
 leadsRouter.put('/:id', leadsController.update);
 leadsRouter.delete('/:id', leadsController.delete);
+leadsRouter.get('/find', leadsDOTController.show);
 leadsRouter.get('/:id', leadsController.show);
 leadsRouter.get('/', leadsController.index);
 leadsRouter.get('/count/all', leadsController.count);

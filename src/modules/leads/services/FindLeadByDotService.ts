@@ -6,6 +6,7 @@ import ILeadsRepository from '../repositories/ILeadsRepository';
 interface IRequest {
   dot: string;
   searchCriteria: string;
+  page: string;
 }
 
 @injectable()
@@ -18,6 +19,7 @@ export default class FindLeadByDotService {
   public async execute({
     dot,
     searchCriteria,
+    page,
   }: IRequest): Promise<Lead[] | undefined> {
     switch (searchCriteria) {
       case 'exact': {
@@ -30,7 +32,11 @@ export default class FindLeadByDotService {
         return [lead];
       }
       case 'contains': {
-        const leads = await this.leadsRepository.findByContainingStringDOT(dot);
+        const skip = (Number(page) - 1) * 50;
+        const leads = await this.leadsRepository.findByContainingStringDOT(
+          dot,
+          skip,
+        );
 
         return leads;
       }
