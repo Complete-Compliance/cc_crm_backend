@@ -81,6 +81,15 @@ export default class Lead {
   bondInsuranceRequired: string;
 
   @Column()
+  bipdInsuranceOnFile: string;
+
+  @Column()
+  cargoInsuranceOnFile: string;
+
+  @Column()
+  bondInsuranceOnFile: string;
+
+  @Column()
   insuranceCarrier: string;
 
   @Column()

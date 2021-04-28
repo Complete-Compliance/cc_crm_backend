@@ -22,6 +22,9 @@ export default interface ICreateLeadDTO {
   bipdInsuranceRequired?: string;
   cargoInsuranceRequired?: string;
   bondInsuranceRequired?: string;
+  bipdInsuranceOnFile?: string;
+  cargoInsuranceOnFile?: string;
+  bondInsuranceOnFile?: string;
   insuranceCarrier?: string;
   policySurety?: string;
   postedDate?: string;

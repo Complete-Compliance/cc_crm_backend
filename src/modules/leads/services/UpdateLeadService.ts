@@ -31,6 +31,9 @@ interface IRequest {
   bipdInsuranceRequired?: string;
   cargoInsuranceRequired?: string;
   bondInsuranceRequired?: string;
+  bipdInsuranceOnFile?: string;
+  cargoInsuranceOnFile?: string;
+  bondInsuranceOnFile?: string;
   insuranceCarrier?: string;
   policySurety?: string;
   postedDate?: string;
@@ -72,6 +75,9 @@ export default class UpdateLeadService {
     bipdInsuranceRequired,
     cargoInsuranceRequired,
     bondInsuranceRequired,
+    bipdInsuranceOnFile,
+    cargoInsuranceOnFile,
+    bondInsuranceOnFile,
     insuranceCarrier,
     policySurety,
     postedDate,
@@ -128,6 +134,10 @@ export default class UpdateLeadService {
     lead.coverageTo = coverageTo || lead.coverageTo;
     lead.effectiveDate = effectiveDate || lead.effectiveDate;
     lead.cancellationDate = cancellationDate || lead.cancellationDate;
+    lead.bipdInsuranceOnFile = bipdInsuranceOnFile || lead.bipdInsuranceOnFile;
+    lead.cargoInsuranceOnFile =
+      cargoInsuranceOnFile || lead.cargoInsuranceOnFile;
+    lead.bondInsuranceOnFile = bondInsuranceOnFile || lead.bondInsuranceOnFile;
 
     const updatedLead = await this.leadsRepository.save(lead);
 
