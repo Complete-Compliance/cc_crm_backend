@@ -259,34 +259,32 @@ def get_details(USDOTNumber):
             lead.update({"bipdInsuranceRequired": BIPDInsuranceRequired})
         except:
             print('INFO NOT FOUND - ADVANCED 1')
-        # try:
-        #     BIPDInsuranceOnFile = tree.xpath('//td[@headers="bipd Insurance_on_file"]//text()')[0].strip()
-        #     lead.update({"bipdInsuranceRequired": "N/A"})
-        # except:
-        #     lead.update({"bipdInsuranceRequired": "N/A"})
+        try:
+            BIPDInsuranceOnFile = tree.xpath('//td[@headers="bipd Insurance_on_file"]//text()')[0].strip()
+            lead.update({"bipdInsuranceOnFile": BIPDInsuranceOnFile})
+        except:
+            print('INFO NOT FOUND - ADVANCED 1')
         try:
             CargoInsuranceRequired = tree.xpath('//td[@headers="cargo Insurance_required"]//text()')[0].strip()
             lead.update({"cargoInsuranceRequired": CargoInsuranceRequired})
         except:
             print('INFO NOT FOUND - ADVANCED 1')
-        # try:
-        #     CargoInsuranceOnFile = tree.xpath('//td[@headers="cargo Insurance_on_file"]//text()')[0].strip()
-        #     lead.update({"bipdInsuranceRequired": "N/A"})
-        # except:
-        #     lead.update({"bipdInsuranceRequired": "N/A"})
+        try:
+            CargoInsuranceOnFile = tree.xpath('//td[@headers="cargo Insurance_on_file"]//text()')[0].strip()
+            lead.update({"cargoInsuranceOnFile": CargoInsuranceOnFile})
+        except:
+            print('INFO NOT FOUND - ADVANCED 1')
         try:
             BondInsuranceRequired = tree.xpath('//td[@headers="bond Insurance_required"]//text()')[0].strip()
             lead.update({"bondInsuranceRequired": BondInsuranceRequired})
         except:
             print('INFO NOT FOUND - ADVANCED 1')
-        # try:
-        #     BondInsuranceOnFile = tree.xpath('//td[@headers="bond Insurance_on_file"]//text()')[0].strip()
-        #     lead.update({"bipdInsuranceRequired": "N/A"})
-        # except:
-        #     lead.update({"bipdInsuranceRequired": "N/A"})
+        try:
+            BondInsuranceOnFile = tree.xpath('//td[@headers="bond Insurance_on_file"]//text()')[0].strip()
+            lead.update({"bondInsuranceOnFile": BondInsuranceOnFile})
+        except:
+            print('INFO NOT FOUND - ADVANCED 1')
 
-        # active_pending_url = "https://li-public.fmcsa.dot.gov/LIVIEW/" + \
-        #                     tree.xpath('//a[text()="Active/Pending Insurance"]/@href')[0]
         active_pending_url = "https://li-public.fmcsa.dot.gov/LIVIEW/pkg_carrquery.prc_activeinsurance/"
 
         # 3. Active/Pending Insurance
