@@ -86,7 +86,7 @@ export default class UpdateLeadService {
       throw new AppError('No lead was found with given ID.');
     }
 
-    if (usdot) {
+    if (usdot && usdot !== lead.usdot) {
       const leadExists = await this.leadsRepository.findByDOT(usdot);
 
       if (leadExists) {
