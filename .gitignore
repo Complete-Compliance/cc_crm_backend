@@ -22,3 +22,4 @@ src/shared/utils/scraper/__pycache__
 src/shared/utils/scraper/logs
 src/shared/utils/scraper/.env
 src/shared/utils/scraper/test.py
+src/shared/utils/scraper/quick_scrap_terminal_code.py

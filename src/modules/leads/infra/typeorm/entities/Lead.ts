@@ -93,6 +93,9 @@ export default class Lead {
   insuranceCarrier: string;
 
   @Column()
+  insuranceType: string;
+
+  @Column()
   policySurety: string;
 
   @Column()

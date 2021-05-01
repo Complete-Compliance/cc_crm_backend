@@ -34,6 +34,7 @@ interface IRequest {
   cargoInsuranceOnFile?: string;
   bondInsuranceOnFile?: string;
   insuranceCarrier?: string;
+  insuranceType?: string;
   policySurety?: string;
   postedDate?: string;
   coverageFrom?: string;
@@ -77,6 +78,7 @@ export default class CreateLeadService {
     cargoInsuranceOnFile,
     bondInsuranceOnFile,
     insuranceCarrier,
+    insuranceType,
     policySurety,
     postedDate,
     coverageFrom,
@@ -122,6 +124,7 @@ export default class CreateLeadService {
       cargoInsuranceOnFile,
       bondInsuranceOnFile,
       insuranceCarrier,
+      insuranceType,
       policySurety,
       postedDate,
       coverageFrom,

@@ -284,47 +284,68 @@ def get_details(USDOTNumber):
             lead.update({"bondInsuranceOnFile": BondInsuranceOnFile})
         except:
             print('INFO NOT FOUND - ADVANCED 1')
+        # getting info needed for next page form
+        try:
+            McDocketNum = tree.xpath('//td[@id="ldocketnumber"]/font/text()')[0].strip()
+        except:
+            return lead
+        try:
+            FormLegalName = tree.xpath('//td[@headers="lname"]/font/text()')[0].strip()
+        except:
+            return lead
+        
+        formdata['pv_legal_name'] = FormLegalName
+        formdata['pv_pref_docket'] = McDocketNum
+        formdata['pv_usdot_no'] = str(USDOTNumber)
 
         active_pending_url = "https://li-public.fmcsa.dot.gov/LIVIEW/pkg_carrquery.prc_activeinsurance/"
-
         # 3. Active/Pending Insurance
         print('waiting before request...')
         time.sleep(2)
 
-        r = session.get(url=active_pending_url)
+        r = session.post(url=active_pending_url, data=formdata)
         tree = html.fromstring(r.text)
         try:
-            InsuranceCarrier = tree.xpath('//td[contains(@headers, "insurance_carrier")]/a//text()')[0].strip()
+            form_type = tree.xpath('//th[@headers="form"]/center/font/text()')[0].strip()
+        except:
+            return lead
+        try:
+            InsuranceType = tree.xpath(f'//td[@headers="{form_type} type"]/center/font/text()')[0].strip()
+            lead.update({"insuranceType": InsuranceType})
+        except:
+            print('INFO NOT FOUND - ADVANCED 2')
+        try:
+            InsuranceCarrier = tree.xpath('//form[@action="pkg_carrquery.prc_insfiler_details"]/center/u/text()')[0].strip()
             lead.update({"insuranceCarrier": InsuranceCarrier})
         except:
             print('INFO NOT FOUND - ADVANCED 2')
         try:
-            PolicySurety = tree.xpath('//td[contains(@headers, "policy_surety")]//text()')[0].strip()
+            PolicySurety = policySurety = tree.xpath(f'//td[@headers="{form_type} policy_surety "]/center/font/text()')[0].strip()
             lead.update({"policySurety": PolicySurety})
         except:
             print('INFO NOT FOUND - ADVANCED 2')
         try:
-            PostedDate = tree.xpath('//td[contains(@headers, "posted_date")]//text()')[0].strip()
+            PostedDate = tree.xpath(f'//td[@headers="{form_type} posted_date "]/center/font/text()')[0].strip()
             lead.update({"postedDate": PostedDate})
         except:
             print('INFO NOT FOUND - ADVANCED 2')
         try:
-            CoverageFrom = tree.xpath('//td[contains(@headers, "coverage_from")]//text()')[0].strip()
+            CoverageFrom = tree.xpath(f'//td[@headers="{form_type} coverage_from "]/center/font/text()')[0].strip()
             lead.update({"coverageFrom": CoverageFrom})
         except:
             print('INFO NOT FOUND - ADVANCED 2')
         try:
-            CoverageTo = tree.xpath('//td[contains(@headers, "coverage_to")]//text()')[0].strip()
+            CoverageTo = tree.xpath(f'//td[@headers="{form_type} coverage_to "]/center/font/text()')[0].strip()
             lead.update({"coverageFrom": CoverageTo})
         except:
             print('INFO NOT FOUND - ADVANCED 2')
         try:
-            EffectiveDate = tree.xpath('//td[contains(@headers, "effective_date")]//text()')[0].strip()
+            EffectiveDate = tree.xpath(f'//td[@headers="{form_type} effective_date "]/center/font/text()')[0].strip()
             lead.update({"effectiveDate": EffectiveDate})
         except:
             print('INFO NOT FOUND - ADVANCED 2')
         try:
-            CancellationDate = tree.xpath('//td[contains(@headers, "cancellation_date")]//text()')[0].strip()
+            CancellationDate = tree.xpath(f'//td[@headers="{form_type} cancellation_date "]/center/font/text()')[0].strip()
             lead.update({"cancellationDate": CancellationDate})
         except:
             print('INFO NOT FOUND - ADVANCED 2')

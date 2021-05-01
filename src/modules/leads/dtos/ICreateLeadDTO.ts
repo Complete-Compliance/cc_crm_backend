@@ -26,6 +26,7 @@ export default interface ICreateLeadDTO {
   cargoInsuranceOnFile?: string;
   bondInsuranceOnFile?: string;
   insuranceCarrier?: string;
+  insuranceType?: string;
   policySurety?: string;
   postedDate?: string;
   coverageFrom?: string;

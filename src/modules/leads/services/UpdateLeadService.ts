@@ -35,6 +35,7 @@ interface IRequest {
   cargoInsuranceOnFile?: string;
   bondInsuranceOnFile?: string;
   insuranceCarrier?: string;
+  insuranceType?: string;
   policySurety?: string;
   postedDate?: string;
   coverageFrom?: string;
@@ -79,6 +80,7 @@ export default class UpdateLeadService {
     cargoInsuranceOnFile,
     bondInsuranceOnFile,
     insuranceCarrier,
+    insuranceType,
     policySurety,
     postedDate,
     coverageFrom,
@@ -128,6 +130,7 @@ export default class UpdateLeadService {
     lead.bondInsuranceRequired =
       bondInsuranceRequired || lead.bondInsuranceRequired;
     lead.insuranceCarrier = insuranceCarrier || lead.insuranceCarrier;
+    lead.insuranceType = insuranceType || lead.insuranceType;
     lead.policySurety = policySurety || lead.policySurety;
     lead.postedDate = postedDate || lead.postedDate;
     lead.coverageFrom = coverageFrom || lead.coverageFrom;
