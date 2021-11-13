@@ -2,6 +2,10 @@ import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
 import IScrapProcessesRepository from '../repositories/IScrapProcessesRepository';
 
+interface IRequest {
+  category: string;
+}
+
 @injectable()
 export default class UpdateRunningProcessService {
   constructor(
@@ -9,9 +13,9 @@ export default class UpdateRunningProcessService {
     private scrapProcessesRepository: IScrapProcessesRepository,
   ) {}
 
-  public async execute(): Promise<void> {
+  public async execute({ category }: IRequest): Promise<void> {
     const runningProcessExists = await this.scrapProcessesRepository.findByStatus(
-      'Running',
+      { status: 'Running', category },
     );
 
     if (!runningProcessExists) {

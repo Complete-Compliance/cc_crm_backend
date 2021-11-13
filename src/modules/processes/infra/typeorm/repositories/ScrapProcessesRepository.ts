@@ -1,4 +1,5 @@
 import ICreateScrapProcessDTO from '@modules/processes/dtos/ICreateScrapProcessDTO';
+import IFindByStatusDTO from '@modules/processes/dtos/IFindByStatusDTO';
 import IScrapProcessesRepository from '@modules/processes/repositories/IScrapProcessesRepository';
 import { getRepository, Repository } from 'typeorm';
 import ScrapProcess from '../entities/ScrapProcess';
@@ -29,8 +30,13 @@ export default class ScrapProcessesRepository
     await this.ormRepository.remove(scrapProcess);
   }
 
-  public async findByStatus(status: string): Promise<ScrapProcess | undefined> {
-    const process = await this.ormRepository.findOne({ where: { status } });
+  public async findByStatus({
+    status,
+    category,
+  }: IFindByStatusDTO): Promise<ScrapProcess | undefined> {
+    const process = await this.ormRepository.findOne({
+      where: { status, category },
+    });
 
     return process;
   }
@@ -41,8 +47,8 @@ export default class ScrapProcessesRepository
     return process;
   }
 
-  public async findAll(): Promise<ScrapProcess[]> {
-    const processes = await this.ormRepository.find();
+  public async findAll(category: string): Promise<ScrapProcess[]> {
+    const processes = await this.ormRepository.find({ where: { category } });
 
     return processes;
   }

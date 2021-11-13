@@ -1,10 +1,12 @@
 import AppError from '@shared/errors/AppError';
+import resolveScriptPathByCategory from '@shared/utils/resolveScriptPathByCategory';
 import { spawn } from 'child_process';
 import { inject, injectable } from 'tsyringe';
 import IScrapProcessesRepository from '../repositories/IScrapProcessesRepository';
 
 interface IRequest {
   id: string;
+  category: string;
 }
 
 @injectable()
@@ -14,9 +16,9 @@ export default class ScrapByRangeService {
     private scrapProcessesRepository: IScrapProcessesRepository,
   ) {}
 
-  public async execute({ id }: IRequest): Promise<void> {
+  public async execute({ id, category }: IRequest): Promise<void> {
     const runningProcessExists = await this.scrapProcessesRepository.findByStatus(
-      'Running',
+      { status: 'Running', category },
     );
 
     if (runningProcessExists) {
@@ -31,17 +33,16 @@ export default class ScrapByRangeService {
       throw new AppError('No process was found with given ID.');
     }
 
-    spawn(
-      `${process.env.PYTHON_EXEC_PATH} ${process.env.PYTHON_SCRIPT_PATH}/scrap.py $START $END`,
-      {
-        shell: true,
-        detached: true,
-        env: {
-          START: processToRun.startDot,
-          END: processToRun.endDot,
-        },
+    const scriptPath = resolveScriptPathByCategory(category);
+
+    spawn(`${process.env.PYTHON_EXEC_PATH} ${scriptPath} $START $END`, {
+      shell: true,
+      detached: true,
+      env: {
+        START: processToRun.startDot,
+        END: processToRun.endDot,
       },
-    ).on('error', async () => {
+    }).on('error', async () => {
       processToRun.status = 'Failed';
       await this.scrapProcessesRepository.update(processToRun);
     });

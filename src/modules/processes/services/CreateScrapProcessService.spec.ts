@@ -18,6 +18,7 @@ describe('CreateScrapProcess', () => {
     const process = await createScrapProcess.execute({
       startDot: '300',
       endDot: '400',
+      category: 'search_leads',
     });
 
     expect(process).toHaveProperty('id');
@@ -29,6 +30,7 @@ describe('CreateScrapProcess', () => {
       createScrapProcess.execute({
         startDot: '400',
         endDot: '300',
+        category: 'search_leads',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

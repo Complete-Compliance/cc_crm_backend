@@ -3,6 +3,11 @@ import { inject, injectable } from 'tsyringe';
 import ScrapProcess from '../infra/typeorm/entities/ScrapProcess';
 import IScrapProcessesRepository from '../repositories/IScrapProcessesRepository';
 
+interface IRequest {
+  category?: string;
+  id?: string;
+}
+
 @injectable()
 export default class ListScrapProcessesService {
   constructor(
@@ -10,7 +15,10 @@ export default class ListScrapProcessesService {
     private scrapProcessesRepository: IScrapProcessesRepository,
   ) {}
 
-  public async execute(id?: string): Promise<ScrapProcess | ScrapProcess[]> {
+  public async execute({
+    id,
+    category,
+  }: IRequest): Promise<ScrapProcess | ScrapProcess[]> {
     if (id) {
       const process = await this.scrapProcessesRepository.findById(id);
 
@@ -20,7 +28,12 @@ export default class ListScrapProcessesService {
 
       return process;
     }
-    const processes = await this.scrapProcessesRepository.findAll();
+
+    if (!category) {
+      throw new AppError('You must search by id or category');
+    }
+
+    const processes = await this.scrapProcessesRepository.findAll(category);
 
     return processes;
   }

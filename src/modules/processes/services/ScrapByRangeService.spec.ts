@@ -18,9 +18,12 @@ describe('ScrapByRange', () => {
       startDot: '100',
       endDot: '200',
       status: 'Created',
+      category: 'search_leads',
     });
 
-    await expect(scrapByRange.execute({ id: process.id })).resolves;
+    await expect(
+      scrapByRange.execute({ id: process.id, category: 'search_leads' }),
+    ).resolves;
   });
 
   it('should not be able spawn python scrap script with an already running process', async () => {
@@ -28,17 +31,20 @@ describe('ScrapByRange', () => {
       startDot: '100',
       endDot: '200',
       status: 'Running',
+      category: 'search_leads',
     });
 
     const process = await fakeScrapProcessesRepository.create({
       startDot: '201',
       endDot: '300',
       status: 'Created',
+      category: 'search_leads',
     });
 
     await expect(
       scrapByRange.execute({
         id: process.id,
+        category: 'search_leads',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -47,6 +53,7 @@ describe('ScrapByRange', () => {
     await expect(
       scrapByRange.execute({
         id: 'non-existing-id',
+        category: 'search_leads',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

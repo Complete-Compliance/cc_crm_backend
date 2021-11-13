@@ -39,8 +39,8 @@ class CRM_Manager(object):
     else:
       return None
   
-  def updateProcessStatus(self):
-    response = req.put(f'{self.api}/scrapProcesses/running')
+  def updateProcessStatus(self, category):
+    response = req.put(f"{self.api}/scrapProcesses/running?category={category}")
 
     if response.status_code == 204 or response.status_code == 200:
       return True

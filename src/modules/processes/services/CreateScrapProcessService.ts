@@ -6,6 +6,7 @@ import IScrapProcessesRepository from '../repositories/IScrapProcessesRepository
 interface IRequest {
   startDot: string;
   endDot: string;
+  category: string;
 }
 
 @injectable()
@@ -15,7 +16,11 @@ export default class CreateScrapProcessService {
     private scrapProcessesRepository: IScrapProcessesRepository,
   ) {}
 
-  public async execute({ startDot, endDot }: IRequest): Promise<ScrapProcess> {
+  public async execute({
+    startDot,
+    endDot,
+    category,
+  }: IRequest): Promise<ScrapProcess> {
     if (Number(startDot) > Number(endDot)) {
       throw new AppError('StartDot should be lower than EndDot');
     }
@@ -24,6 +29,7 @@ export default class CreateScrapProcessService {
       startDot,
       endDot,
       status: 'Created',
+      category,
     });
 
     return process;

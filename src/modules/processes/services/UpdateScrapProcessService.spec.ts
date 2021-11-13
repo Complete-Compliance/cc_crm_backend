@@ -19,6 +19,7 @@ describe('UpdateScrapProcess', () => {
       startDot: '100',
       endDot: '200',
       status: 'Created',
+      category: 'search_leads',
     });
 
     const updatedProcess = await updateScrapProcess.execute({
@@ -38,6 +39,7 @@ describe('UpdateScrapProcess', () => {
       startDot: '100',
       endDot: '200',
       status: 'Created',
+      category: 'search_leads',
     });
 
     const updatedProcess = await updateScrapProcess.execute({
@@ -74,6 +76,7 @@ describe('UpdateScrapProcess', () => {
       startDot: '100',
       endDot: '200',
       status: 'Created',
+      category: 'search_leads',
     });
 
     await expect(
@@ -89,6 +92,7 @@ describe('UpdateScrapProcess', () => {
       startDot: '100',
       endDot: '200',
       status: 'Created',
+      category: 'search_leads',
     });
 
     await expect(
@@ -104,6 +108,7 @@ describe('UpdateScrapProcess', () => {
       startDot: '100',
       endDot: '200',
       status: 'Created',
+      category: 'search_leads',
     });
 
     await expect(
@@ -118,6 +123,7 @@ describe('UpdateScrapProcess', () => {
       startDot: '100',
       endDot: '200',
       status: 'Created',
+      category: 'search_leads',
     });
 
     await expect(

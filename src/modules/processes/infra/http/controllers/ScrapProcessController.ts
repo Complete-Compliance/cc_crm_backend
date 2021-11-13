@@ -4,15 +4,18 @@ import ListScrapProcessesService from '@modules/processes/services/ListScrapProc
 import UpdateScrapProcessService from '@modules/processes/services/UpdateScrapProcessService';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-// import { classToClass } from 'class-transformer';
 
 export default class ScrapProcessController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { startDot, endDot } = request.body;
+    const { startDot, endDot, category } = request.body;
 
     const createScrapProcess = container.resolve(CreateScrapProcessService);
 
-    const process = await createScrapProcess.execute({ startDot, endDot });
+    const process = await createScrapProcess.execute({
+      startDot,
+      endDot,
+      category,
+    });
 
     return response.json(process);
   }
@@ -33,13 +36,15 @@ export default class ScrapProcessController {
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
-    const { id } = request.query;
+    const { id, category } = request.query;
 
     const listScrapProcesses = container.resolve(ListScrapProcessesService);
 
-    const process = await listScrapProcesses.execute(id as string);
+    const process = await listScrapProcesses.execute({
+      id: id as string,
+      category: category as string,
+    });
 
-    // return response.json(classToClass(process));
     return response.json(process);
   }
 
