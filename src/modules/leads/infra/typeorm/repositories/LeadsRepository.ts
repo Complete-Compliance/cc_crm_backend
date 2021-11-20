@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Not, Repository } from 'typeorm';
 
 import ILeadsRepository from '@modules/leads/repositories/ILeadsRepository';
 import ICreateLeadDTO from '@modules/leads/dtos/ICreateLeadDTO';
@@ -56,6 +56,17 @@ export default class LeadsRepository implements ILeadsRepository {
     });
 
     return leads;
+  }
+
+  public async findAllWithEmail(skip: number): Promise<Lead[]> {
+    const leads = await this.ormRepository.find({
+      order: { usdot: 'DESC' },
+      where: { email: Not('N/A') },
+      skip,
+      take: 50,
+    });
+
+    return leads.filter(lead => lead.email);
   }
 
   public async countLeads(): Promise<number> {

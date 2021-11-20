@@ -20,7 +20,7 @@ class Scraper():
 				try:
 					if lead['usdot'] == '':
 						continue
-			
+
 					leadExists = self.crm.findLead(lead['usdot'])
 					if not leadExists:
 						print('NEW LEAD')
@@ -38,7 +38,7 @@ class Scraper():
 
 			time.sleep(5)
 
-		self.crm.updateProcessStatus()
+		self.crm.updateProcessStatus('search_leads')
 
 if __name__ == '__main__':
 	app = Scraper(argv[1], argv[2])

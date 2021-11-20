@@ -99,11 +99,14 @@ export default class LeadsController {
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
-    const { page } = request.query;
+    const { page, searchCriteria } = request.query;
 
     const listLeads = container.resolve(ListLeadsService);
 
-    const leads = await listLeads.execute({ page: page as string });
+    const leads = await listLeads.execute({
+      page: page as string,
+      searchCriteria: searchCriteria as string,
+    });
 
     return response.json(leads);
   }

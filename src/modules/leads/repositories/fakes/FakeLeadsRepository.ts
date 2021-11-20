@@ -22,7 +22,7 @@ export default class FakeLeadsRepository implements ILeadsRepository {
 
   public async findByContainingStringDOT(
     searchString: string,
-    skip: number,
+    _skip: number,
   ): Promise<Lead[]> {
     const foundLeads = this.leads.filter(
       lead => lead.usdot.indexOf(searchString) >= 0,
@@ -41,8 +41,12 @@ export default class FakeLeadsRepository implements ILeadsRepository {
     return foundLeads.length;
   }
 
-  public async findAll(skip: number): Promise<Lead[]> {
+  public async findAll(_skip: number): Promise<Lead[]> {
     return this.leads;
+  }
+
+  public async findAllWithEmail(_skip: number): Promise<Lead[]> {
+    return this.leads.filter(lead => lead.email && lead.email !== 'N/A');
   }
 
   public async create(leadData: ICreateLeadDTO): Promise<Lead> {

@@ -1,6 +1,10 @@
 import { uuid } from 'uuidv4';
-import ICreateScrapProcessDTO from '@modules/processes/dtos/ICreateScrapProcessDTO';
+
 import ScrapProcess from '@modules/processes/infra/typeorm/entities/ScrapProcess';
+
+import ICreateScrapProcessDTO from '@modules/processes/dtos/ICreateScrapProcessDTO';
+import IFindByStatusDTO from '@modules/processes/dtos/IFindByStatusDTO';
+
 import IScrapProcessesRepository from '../IScrapProcessesRepository';
 
 export default class FakeScrapProcessRepository
@@ -39,9 +43,13 @@ export default class FakeScrapProcessRepository
     this.processes.splice(processIndex, 1);
   }
 
-  public async findByStatus(status: string): Promise<ScrapProcess | undefined> {
+  public async findByStatus({
+    status,
+    category,
+  }: IFindByStatusDTO): Promise<ScrapProcess | undefined> {
     const process = this.processes.find(
-      processToFind => processToFind.status === status,
+      processToFind =>
+        processToFind.status === status && processToFind.category === category,
     );
 
     return process;
@@ -55,7 +63,7 @@ export default class FakeScrapProcessRepository
     return process;
   }
 
-  public async findAll(): Promise<ScrapProcess[]> {
-    return this.processes;
+  public async findAll(category: string): Promise<ScrapProcess[]> {
+    return this.processes.filter(process => process.category === category);
   }
 }

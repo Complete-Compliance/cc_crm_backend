@@ -19,27 +19,33 @@ describe('ListScrapProcesses', () => {
       startDot: '301',
       endDot: '400',
       status: 'Created',
+      category: 'search_leads',
     });
 
     const process2 = await fakeScrapProcessesRepository.create({
       startDot: '201',
       endDot: '300',
       status: 'Running',
+      category: 'search_leads',
     });
 
     const process3 = await fakeScrapProcessesRepository.create({
       startDot: '0',
       endDot: '100',
       status: 'Failed',
+      category: 'search_leads',
     });
 
     const process4 = await fakeScrapProcessesRepository.create({
       startDot: '100',
       endDot: '200',
       status: 'Completed',
+      category: 'search_leads',
     });
 
-    const processes = await listScrapProcesses.execute();
+    const processes = await listScrapProcesses.execute({
+      category: 'search_leads',
+    });
 
     expect(processes).toEqual(
       expect.arrayContaining([process1, process2, process3, process4]),
@@ -51,16 +57,23 @@ describe('ListScrapProcesses', () => {
       startDot: '301',
       endDot: '400',
       status: 'Created',
+      category: 'search_leads',
     });
 
-    const processFound = await listScrapProcesses.execute(process.id);
+    const processFound = await listScrapProcesses.execute({ id: process.id });
 
     expect(processFound).toEqual(process);
   });
 
   it('should not be able to list a non-existing process', async () => {
     await expect(
-      listScrapProcesses.execute('non-existing-id'),
+      listScrapProcesses.execute({ id: 'non-existing-id' }),
     ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to list with id and category as undefined', async () => {
+    await expect(listScrapProcesses.execute({})).rejects.toBeInstanceOf(
+      AppError,
+    );
   });
 });

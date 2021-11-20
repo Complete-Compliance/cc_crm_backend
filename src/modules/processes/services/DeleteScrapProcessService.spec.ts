@@ -19,6 +19,7 @@ describe('DeleteScrapProcess', () => {
       startDot: '301',
       endDot: '400',
       status: 'Created',
+      category: 'search_leads',
     });
 
     await expect(deleteScrapProcess.execute(process.id)).resolves;
@@ -35,6 +36,7 @@ describe('DeleteScrapProcess', () => {
       startDot: '301',
       endDot: '400',
       status: 'Running',
+      category: 'search_leads',
     });
 
     await expect(deleteScrapProcess.execute(process.id)).rejects.toBeInstanceOf(

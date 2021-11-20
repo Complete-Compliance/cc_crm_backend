@@ -26,6 +26,7 @@
      "no-useless-constructor":"off",
      "no-console": "off",
      "no-unused-vars": [2, {"args": "after-used", "argsIgnorePattern": "^_"}],
+     "@typescript-eslint/no-unused-vars": [2, {"args": "after-used", "argsIgnorePattern": "^_"}],
      "import/extensions": [
       "error",
       "ignorePackages",

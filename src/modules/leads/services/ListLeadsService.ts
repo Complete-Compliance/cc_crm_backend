@@ -6,6 +6,7 @@ import ILeadsRepository from '../repositories/ILeadsRepository';
 interface IRequest {
   id?: string;
   page?: string;
+  searchCriteria?: string;
 }
 
 @injectable()
@@ -15,7 +16,11 @@ export default class ListLeadsService {
     private leadsRepository: ILeadsRepository,
   ) {}
 
-  public async execute({ id, page }: IRequest): Promise<Lead | Lead[]> {
+  public async execute({
+    id,
+    page,
+    searchCriteria,
+  }: IRequest): Promise<Lead | Lead[]> {
     if (id) {
       const lead = await this.leadsRepository.findById(id);
 
@@ -32,10 +37,19 @@ export default class ListLeadsService {
 
     const skip = (Number(page) - 1) * 50;
 
-    const leads = await this.leadsRepository.findAll(skip);
+    let leads: Lead[];
+    switch (searchCriteria) {
+      case 'email': {
+        leads = await this.leadsRepository.findAllWithEmail(skip);
+        break;
+      }
+      default: {
+        leads = await this.leadsRepository.findAll(skip);
 
-    if (!leads.length) {
-      throw new AppError('No leads found', 404);
+        if (!leads.length) {
+          throw new AppError('No leads found', 404);
+        }
+      }
     }
 
     return leads;
