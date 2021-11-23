@@ -12,7 +12,7 @@ class Email_Scraper:
     self.startDot = int(startDot)
     self.endDot = int(endDot)
 
-    self.headers = headers = {
+    self.headers = {
       "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
       "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36",
     }
@@ -27,7 +27,7 @@ class Email_Scraper:
 
     return url
 
-  def check_if_email_should_be_scraped(self, dot_number, session):
+  def check_email_type(self, dot_number, session):
     try:
       url = self.get_overview_url(dot_number)
 
@@ -35,11 +35,21 @@ class Email_Scraper:
 
       soup = BeautifulSoup(response.content, features="html.parser")
 
-      query = soup.findAll('aside', class_='carrierNote auth')
+      not_authorized_query = soup.findAll('aside', class_='carrierNote auth')
 
-      should_continue = not bool(len(query))
+      not_authorized = bool(len(not_authorized_query))
 
-      return should_continue
+      if not_authorized:
+        return 'notAuthorized'
+      
+      mcs150_outdated_query = soup.findAll('aside', class_='carrierNote OOS')
+
+      mcs150_outdated = bool(len(mcs150_outdated_query))
+
+      if mcs150_outdated:
+        return 'mcs150Outdated'
+
+      return 'authorized'
     except Exception as e:
       # print(e)
       return False
@@ -82,11 +92,7 @@ class Email_Scraper:
       # print(f'Waiting {sleep_time} before continuing...')
       sleep(sleep_time)
 
-      should_scrap_email = self.check_if_email_should_be_scraped(currentDot, session)
-
-      if not should_scrap_email:
-        # print(f'U.S. DOT# {currentDot} has no current for-hire operating authority with FMCSA.')
-        continue
+      email_type = self.check_email_type(currentDot, session)
 
       sleep_time = randrange(3, 6)
       # print(f'Waiting {sleep_time} before continuing...')
@@ -104,7 +110,7 @@ class Email_Scraper:
         # print("We've already scraped this email")
         continue
 
-      data = { 'email': email }
+      data = { 'email': email, 'mailtype': email_type }
 
       self.crm.updateLead(data, leadExists['id'])
       # print('Email updated')
