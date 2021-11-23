@@ -58,10 +58,19 @@ export default class LeadsRepository implements ILeadsRepository {
     return leads;
   }
 
-  public async findAllWithEmail(skip: number): Promise<Lead[]> {
+  public async findAllWithEmail(
+    skip: number,
+    emailType: string,
+  ): Promise<Lead[]> {
+    const where = { email: Not('N/A') };
+
+    if (emailType) {
+      Object.assign(where, { mailtype: emailType });
+    }
+
     const leads = await this.ormRepository.find({
       order: { usdot: 'DESC' },
-      where: { email: Not('N/A') },
+      where,
       skip,
       take: 50,
     });

@@ -113,6 +113,9 @@ export default class Lead {
   @Column()
   cancellationDate: string;
 
+  @Column()
+  mailtype: string;
+
   @CreateDateColumn()
   createdAt: Date;
 
