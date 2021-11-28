@@ -99,13 +99,14 @@ export default class LeadsController {
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
-    const { page, searchCriteria } = request.query;
+    const { page, searchCriteria, emailType } = request.query;
 
     const listLeads = container.resolve(ListLeadsService);
 
     const leads = await listLeads.execute({
       page: page as string,
       searchCriteria: searchCriteria as string,
+      emailType: emailType as string,
     });
 
     return response.json(leads);
@@ -157,6 +158,7 @@ export default class LeadsController {
       coverageTo,
       effectiveDate,
       cancellationDate,
+      mailtype,
     } = request.body;
 
     const updateLead = container.resolve(UpdateLeadService);
@@ -197,6 +199,7 @@ export default class LeadsController {
       coverageTo,
       effectiveDate,
       cancellationDate,
+      mailtype,
     });
 
     return response.json(lead);

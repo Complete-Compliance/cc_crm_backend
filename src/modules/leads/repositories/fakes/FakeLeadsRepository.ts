@@ -45,7 +45,10 @@ export default class FakeLeadsRepository implements ILeadsRepository {
     return this.leads;
   }
 
-  public async findAllWithEmail(_skip: number): Promise<Lead[]> {
+  public async findAllWithEmail(
+    _skip: number,
+    _emailType: string,
+  ): Promise<Lead[]> {
     return this.leads.filter(lead => lead.email && lead.email !== 'N/A');
   }
 

@@ -7,6 +7,7 @@ interface IRequest {
   id?: string;
   page?: string;
   searchCriteria?: string;
+  emailType?: string;
 }
 
 @injectable()
@@ -20,6 +21,7 @@ export default class ListLeadsService {
     id,
     page,
     searchCriteria,
+    emailType,
   }: IRequest): Promise<Lead | Lead[]> {
     if (id) {
       const lead = await this.leadsRepository.findById(id);
@@ -40,7 +42,7 @@ export default class ListLeadsService {
     let leads: Lead[];
     switch (searchCriteria) {
       case 'email': {
-        leads = await this.leadsRepository.findAllWithEmail(skip);
+        leads = await this.leadsRepository.findAllWithEmail(skip, emailType);
         break;
       }
       default: {

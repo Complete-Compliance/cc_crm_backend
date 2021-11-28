@@ -42,6 +42,7 @@ interface IRequest {
   coverageTo?: string;
   effectiveDate?: string;
   cancellationDate?: string;
+  mailtype?: string;
 }
 
 @injectable()
@@ -87,6 +88,7 @@ export default class UpdateLeadService {
     coverageTo,
     effectiveDate,
     cancellationDate,
+    mailtype,
   }: IRequest): Promise<Lead> {
     const lead = await this.leadsRepository.findById(id);
 
@@ -138,6 +140,7 @@ export default class UpdateLeadService {
     lead.effectiveDate = effectiveDate || lead.effectiveDate;
     lead.cancellationDate = cancellationDate || lead.cancellationDate;
     lead.bipdInsuranceOnFile = bipdInsuranceOnFile || lead.bipdInsuranceOnFile;
+    lead.mailtype = mailtype || lead.mailtype;
     lead.cargoInsuranceOnFile =
       cargoInsuranceOnFile || lead.cargoInsuranceOnFile;
     lead.bondInsuranceOnFile = bondInsuranceOnFile || lead.bondInsuranceOnFile;
