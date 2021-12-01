@@ -113,6 +113,8 @@ class Email_Scraper:
       data = { 'email': email, 'mailtype': email_type }
 
       self.crm.updateLead(data, leadExists['id'])
+      sleep_time = randrange(20, 30)
+      sleep(sleep_time)
       # print('Email updated')
     
     self.crm.updateProcessStatus('search_emails')
