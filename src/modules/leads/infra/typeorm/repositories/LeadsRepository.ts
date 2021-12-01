@@ -69,7 +69,7 @@ export default class LeadsRepository implements ILeadsRepository {
     }
 
     const leads = await this.ormRepository.find({
-      order: { usdot: 'DESC' },
+      order: { updatedAt: 'DESC' },
       where,
       skip,
       take: 50,
