@@ -21,6 +21,13 @@ $ yarn typeorm migration:show
 $ yarn dev:server
 ```
 
+## Deploy
+
+There is a CI which deploys to the server whenever a new change is pushed to the `master branch`.
+Please only push features tested and completed, since we use free CI, so there is limit to how many time CIs can be run.
+
+Is **highly recommended** that you do your work in a different branch, and after everything is completed **and** tested, you create a PR for the master branch.
+
 ## Techs being used
 
 - I'm using postgres database, typescript with DDD and TDD;
